@@ -6,7 +6,8 @@ from flask_migrate import Migrate
 
 #load_dotenv()
 
-database_path = os.environ['DATABASE_URL']
+#database_path = os.environ['DATABASE_URL']
+database_path = None
 if not database_path:
     database_name = "capstone_agency"
     database_path = "postgresql://{}:{}@{}/{}".format('postgres',
@@ -18,8 +19,9 @@ db = SQLAlchemy()
 
 
 def setup_db(app, database_path=database_path):
-    app.config.from_object('config')
+    #app.config.from_object('config')
     app.config["SQLALCHEMY_DATABASE_URI"] = database_path
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
     migrate = Migrate(app, db)
