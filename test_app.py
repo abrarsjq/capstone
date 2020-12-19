@@ -50,7 +50,7 @@ class TestCapstoneAgency(unittest.TestCase):
 
     def test_add_movie_success(self):
 
-        # this test will success becasue the TOKEN of producer and it is valid and he have permission
+        # this test will success becasue the token of producer and it is valid and he have permission
 
         response = self.client().post(
                                       '/movies',
@@ -74,7 +74,7 @@ class TestCapstoneAgency(unittest.TestCase):
 
     def test_remove_movie_success(self):
 
-        # this test will success becasue the TOKEN of producer and it is valid and he have permission
+        # this test will success becasue the token of producer and it is valid and he have permission
 
         movie = Movie.query.all()[0]
         response = self.client().delete('/movies/{}'.format(movie.id),
@@ -94,7 +94,7 @@ class TestCapstoneAgency(unittest.TestCase):
 
     def test_modify_movies_success(self):
 
-        # this test will success becasue the TOKEN of producer and it is valid and he have permission
+        # this test will success becasue the token of producer and it is valid and he have permission
 
         movie = Movie.query.all()[0]
         response = self.client().patch('/movies/{}'.format(movie.id),
@@ -115,11 +115,10 @@ class TestCapstoneAgency(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 401)
 
-    # ACTOR API Endpoint TEST cases
 
     def test_add_actor_success(self):
 
-        # this test will success becasue the TOKEN of producer and it is valid and he have permission
+        # this test will success becasue the token of producer and it is valid and he have permission
 
         response = self.client().post('/actors',
                                       headers={'Authorization': 'Bearer {}'.format(self.producer_token)},
@@ -141,7 +140,7 @@ class TestCapstoneAgency(unittest.TestCase):
 
     def test_remove_actor_success(self):
 
-        # this test will success becasue the TOKEN of producer and it is valid and he have permission
+        # this test will success becasue the token of producer and it is valid and he have permission
 
         actor = Actor.query.all()[0]
         response = self.client().delete('/actors/{}'.format(actor.id),
@@ -160,7 +159,7 @@ class TestCapstoneAgency(unittest.TestCase):
 
     def test_modify_actor_success(self):
 
-        # this test will success becasue the TOKEN of producer and it is valid and he have permission
+        # this test will success becasue the token of producer and it is valid and he have permission
 
         actor = Actor.query.all()[0]
         response = self.client().patch('/actors/{}'.format(actor.id),
