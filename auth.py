@@ -8,7 +8,7 @@ from urllib.request import urlopen
 
 AUTH0_DOMAIN = 'doj.us.auth0.com'
 ALGORITHMS = ['RS256']
-API_AUDIENCE = 'capstone-agency'
+API_AUDIENCE = 'capstone'
 
 
 class AuthError(Exception):

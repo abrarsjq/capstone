@@ -47,7 +47,7 @@ def create_app(test_config=None):
         return jsonify({'success': True, 'actor_id': actor_id})
 
     @app.route('/actors', methods=['POST'])
-    @requires_auth('post:actors')
+    @requires_auth('post:actor')
     def create_actor(jwt):
         data = request.get_json()
 
@@ -114,7 +114,7 @@ def create_app(test_config=None):
         return jsonify({'success': True, 'movie_id': movie_id})
 
     @app.route('/movies', methods=['POST'])
-    @requires_auth('post:movies')
+    @requires_auth('post:movie')
     def create_movie(jwt):
         data = request.get_json()
         if 'title' not in data and 'release' not in data:
@@ -178,7 +178,6 @@ def create_app(test_config=None):
                         'error': 401,
                         'message': 'unauthorized access'}),
                         401)
-
 
     return app
 
