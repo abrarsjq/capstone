@@ -7,7 +7,6 @@ from flask_migrate import Migrate
 #load_dotenv()
 
 database_path = os.environ['DATABASE_URL']
-database_path = None
 if not database_path:
     database_name = "capstone_agency"
     database_path = "postgresql://{}:{}@{}/{}".format('postgres',
