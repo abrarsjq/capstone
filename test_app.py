@@ -30,9 +30,15 @@ class TestCapstoneAgency(unittest.TestCase):
 
         self.director_token = os.environ['DIRECTOR_TOKEN']
         self.producer_token = os.environ['EXECUTIVE_PRODUCER']
+        self.producer_credential = {
+                                    'Authorization': 'Bearer {}'.format(
+                                                    self.producer_token)}
+        self.director_credential = {
+                                    'Authorization': 'Bearer {}'.format(
+                                                    self.director_token)}
 
-
-        # This will create records in the test database to use it to test
+        ''' This will create records in the
+        test database to use it to test '''
 
         for i in range(5):
             actor = Actor(name='Brad Pitt',
@@ -43,18 +49,18 @@ class TestCapstoneAgency(unittest.TestCase):
                           release='2020-12-18')
             movie.insert()
 
-
     def tearDown(self):
         """Executed after reach test"""
         pass
 
     def test_add_movie_success(self):
 
-        # this test will success becasue the token of producer and it is valid and he have permission
+        ''' this test will success becasue the token of
+        producer and it is valid and he have permission '''
 
         response = self.client().post(
                                       '/movies',
-                                      headers={'Authorization': 'Bearer {}'.format(self.producer_token)},
+                                      headers=self.producer_credential,
                                       json={'title': 'Titanic',
                                             'release': "2020-12-18"})
         data = json.loads(response.data)
@@ -65,20 +71,23 @@ class TestCapstoneAgency(unittest.TestCase):
         # 401 error will arise becasue no token provided
 
         response = self.client().post(
-                                      '/movies',
-                                      headers={'Authorization': 'Bearer {}'.format(self.director_token)},
-                                      json={'title': 'Titanic',
-                                            'release': "2020-12-18"})
+                                 '/movies',
+                                 headers=self.director_credential,
+                                 json={
+                                     'title': 'Titanic',
+                                     'release': "2020-12-18"
+                                 })
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 401)
 
     def test_remove_movie_success(self):
 
-        # this test will success becasue the token of producer and it is valid and he have permission
+        ''' this test will success becasue the token of producer
+        and it is valid and he have permission '''
 
         movie = Movie.query.all()[0]
         response = self.client().delete('/movies/{}'.format(movie.id),
-                                        headers={'Authorization': 'Bearer {}'.format(self.producer_token)})
+                                        headers=self.producer_credential)
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
 
@@ -88,17 +97,18 @@ class TestCapstoneAgency(unittest.TestCase):
 
         movie = Movie.query.all()[0]
         response = self.client().delete('/movies/{}'.format(movie.id),
-                                        headers={'Authorization': 'Bearer {}'.format(self.director_token)})
+                                        headers=self.director_credential)
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 401)
 
     def test_modify_movies_success(self):
 
-        # this test will success becasue the token of producer and it is valid and he have permission
+        ''' this test will success becasue the token of producer
+        and it is valid and he have permission '''
 
         movie = Movie.query.all()[0]
         response = self.client().patch('/movies/{}'.format(movie.id),
-                                       headers={'Authorization': 'Bearer {}'.format(self.producer_token)},
+                                       headers=self.producer_credential,
                                        json={'title': 'Titanic',
                                              'release': "2020-12-18"})
         data = json.loads(response.data)
@@ -115,13 +125,13 @@ class TestCapstoneAgency(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 401)
 
-
     def test_add_actor_success(self):
 
-        # this test will success becasue the token of producer and it is valid and he have permission
+        ''' this test will success becasue the token of producer and
+        it is valid and he have permission '''
 
         response = self.client().post('/actors',
-                                      headers={'Authorization': 'Bearer {}'.format(self.producer_token)},
+                                      headers=self.producer_credential,
                                       json={'name': 'Brad Pitt',
                                             'age': 44,
                                             'gender': 'male'})
@@ -140,11 +150,12 @@ class TestCapstoneAgency(unittest.TestCase):
 
     def test_remove_actor_success(self):
 
-        # this test will success becasue the token of producer and it is valid and he have permission
+        ''' this test will success becasue the token of
+        producer and it is valid and he have permission '''
 
         actor = Actor.query.all()[0]
         response = self.client().delete('/actors/{}'.format(actor.id),
-                                        headers={'Authorization': 'Bearer {}'.format(self.producer_token)})
+                                        headers=self.producer_credential)
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
 
@@ -159,11 +170,12 @@ class TestCapstoneAgency(unittest.TestCase):
 
     def test_modify_actor_success(self):
 
-        # this test will success becasue the token of producer and it is valid and he have permission
+        ''' this test will success becasue the token of
+        producer and it is valid and he have permission '''
 
         actor = Actor.query.all()[0]
         response = self.client().patch('/actors/{}'.format(actor.id),
-                                       headers={'Authorization': 'Bearer {}'.format(self.producer_token)},
+                                       headers=self.producer_credential,
                                        json={'name': 'Brad Pitt',
                                              'age': 44,
                                              'gender': 'male'})

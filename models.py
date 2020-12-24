@@ -1,10 +1,7 @@
 import os
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-#from dotenv import load_dotenv
 
-
-#load_dotenv()
 
 database_path = os.environ['DATABASE_URL']
 if not database_path:
@@ -18,7 +15,7 @@ db = SQLAlchemy()
 
 
 def setup_db(app, database_path=database_path):
-    #app.config.from_object('config')
+    # set up the database and connecting it with the app
     app.config["SQLALCHEMY_DATABASE_URI"] = database_path
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
@@ -28,6 +25,7 @@ def setup_db(app, database_path=database_path):
 
 
 class Actor(db.Model):
+    # this is the actor model
     __tablename__ = 'actor'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -44,13 +42,16 @@ class Actor(db.Model):
         self.gender = gender
 
     def insert(self):
+        # insert the object into the DB and commit
         db.session.add(self)
         db.session.commit()
 
     def update(self):
+        # commit the updates
         db.session.commit()
 
     def delete(self):
+        # remove the record from the database and commit the transaction
         db.session.delete(self)
         db.session.commit()
 
@@ -64,6 +65,7 @@ class Actor(db.Model):
 
 
 class Movie(db.Model):
+    # this is the movie model
     __tablename__ = 'movie'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -78,13 +80,16 @@ class Movie(db.Model):
         self.release = release
 
     def insert(self):
+        # insert the object into the DB and commit
         db.session.add(self)
         db.session.commit()
 
     def update(self):
+        # commit the updates
         db.session.commit()
 
     def delete(self):
+        # remove the record from the database and commit the transaction
         db.session.delete(self)
         db.session.commit()
 
